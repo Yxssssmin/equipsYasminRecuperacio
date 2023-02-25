@@ -9,22 +9,17 @@
     <body>
 
     {% if equip %}
-        <h1 id="titolEquip">Dades Equip {{ equip.codi }}</h1>
+        <h1 id="titolEquip">Dades Equip {{ equip.id }}</h1>
         <p class="paragrafEquip">Proyecte 2n DAW.<br>
-            <img src="{{ asset('assets/img/'~equip.img) }}" class="imatgeEquip" />
+            <img src="{{ asset('assets/img/'~equip.imatge) }}" class="imatgeEquip" />
         </p>
         <div class="paragrafEquip">
 
-                <p class="tablaEquip"><strong>Codi: </strong>{{ equip.codi }}</p>
+                <p class="tablaEquip"><strong>Codi: </strong>{{ equip.id }}</p>
                 <p class="tablaEquip"><strong>Nom: </strong>{{ equip.nom }}</p>
                 <p class="tablaEquip"><strong>Cicle: </strong>{{ equip.cicle }}</p>
                 <p class="tablaEquip"><strong>Curs: </strong>{{ equip.curs }}</p>
-   
-                <div class="tablaEquip"><strong>Membres: </strong>
-                {% for membre in equip.membres %}
-                    <p class="paragrafEquip">{{ membre }}</p>
-                {% endfor %}
-                </div>
+                <p class="tablaEquip"><strong>Curs: </strong>{{ equip.nota }}</p>
         </div>
 
     {% else %}

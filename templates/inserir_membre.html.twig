@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+     {{ encore_entry_link_tags('app') }}
+     <link href="{{ asset('assets/css/estilsEquip.css') }}" rel="stylesheet">
+ {% endblock %}
+
+{% block body %}
+
+    <body>
+
+    {% if error %}
+
+        <h1 id="titolEquip">Error en la inserció del membre  {{ membre.nom }}</h1>
+        <p class="paragrafEquip">
+            <img src="{{ asset('assets/img/Triste.png') }}" class="imatgeEquip" />
+        <p class="paragrafEquip">
+            {{ error }}
+        </p>
+
+        </p>
+    {% else %}
+
+        <h1 id="titolEquip">Membre {{ membre.id }} amb nom {{ membre.nom }} inserit correctament</h1>
+
+        <p class="paragrafEquip">
+            <img src="{{  asset('assets/img/'~membre.imatgeperfil) }}" class="imatgeEquip" />
+        </p>
+
+    {% endif %}
+    <div class="paragrafEquip">
+        <a href="{{ path('inici') }}">
+            <img src="{{ asset('assets/img/iconoHome.png') }}" class="imatgeEquip2" />
+            Tornar a l'inici
+        </a>
+    </div>
+
+    </body>
+
+{% endblock %}
