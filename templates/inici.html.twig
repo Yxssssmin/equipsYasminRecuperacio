@@ -12,8 +12,17 @@
         IES Lluís Simarro<br>
         Curs 22/23
         <br>
-        <a href="{{ path('dades_equip') }}"><img src="{{ asset('assets/img/bartSimpson.png') }}" class="imatgeInici" />
+        <a href="{{ path('dades_equip') }}"><img src="{{ asset('assets/img/simpsons.png') }}" class="imatgeInici" />
     </p>
+    <h2 id="titolDos">Llistat d'equips</h2>
+
+    <div id="paragrafDiv">
+        {% for equip in equips %}
+            <p id="paragrafIniciDos">
+                <a id="paragrafInici" style="color:#0a53be" href="{{ path('dades_equip') }}/{{ equip.codi }}">{{ equip.nom }}</a>
+            </p>
+        {% endfor %}
+    </div>
 
     </body>
 
