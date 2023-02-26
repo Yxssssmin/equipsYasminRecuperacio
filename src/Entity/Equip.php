@@ -31,17 +31,17 @@ class Equip
     #[ORM\Column(type: Types::FLOAT, nullable: true)]
     private ?string $nota = null;
 
-    #[ORM\OneToMany(mappedBy: 'equip', targetEntity: Membre::class)]
-    private Collection $membres;
-
-    public function __construct()
-    {
-        $this->membres = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getNom(): ?string

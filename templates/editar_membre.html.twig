@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}EDITAR MEMBRE{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('./assets/css/estilsEquip.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <h1 id="titolEquip">Editar Membre</h1>
+    <div class="paragrafEquip">
+        {{ form_start(formulari) }}
+        {{ form_widget(formulari) }}
+        {{ form_end(formulari) }}
+    </div>
+    <div class="paragrafEquip">
+        <p style="text-align:center;"> Imatge actual <p>
+        {% if membre %}
+            <img style="width: 400px;margin: 10px;"src="{{ asset('assets/img/'~membre.imatgeperfil) }}"/>
+        {% endif %} 
+   
+{% endblock %}
