@@ -13,6 +13,9 @@
         <p class="paragrafEquip">Proyecte 2n DAW.<br>
             <img src="{{ asset('assets/img/'~equip.imatge) }}" class="imatgeEquip" />
         </p>
+        <p class="paragrafEquip">
+            <a href="{{ path('nou_membre') }}">Nou membre <img style="width: 30px; heigth: 30px;" src="{{ asset('assets/img/nuevoMiembro.png') }}" /></a>
+        </p>
         <div class="paragrafEquip">
 
                 <p class="tablaEquip"><strong>Codi: </strong>{{ equip.id }}</p>
@@ -20,6 +23,20 @@
                 <p class="tablaEquip"><strong>Cicle: </strong>{{ equip.cicle }}</p>
                 <p class="tablaEquip"><strong>Curs: </strong>{{ equip.curs }}</p>
                 <p class="tablaEquip"><strong>Curs: </strong>{{ equip.nota }}</p>
+
+                <div class="tablaEquip"><strong>Membres:</strong><br>
+                    {% set comptador = 0 %}
+                        {% for membre in membres %}
+                            {% if membre.equip.id == equip.id %}
+                                {% set comptador = comptador + 1 %}
+                                    {{ membre.nom }}
+                                <a href="{{ path('editarMembre', {'codi': membre.id}) }}"><img style="width: 30px; heigth: 30px;" src="{{ asset('assets/img/editar.png') }}" /></a><br>
+                            {% endif %}
+                        {% endfor %}
+                    {% if comptador == 0 %}
+                        <p>Encara no hi ha membres</p>
+                    {% endif %}
+                </div>
         </div>
 
     {% else %}

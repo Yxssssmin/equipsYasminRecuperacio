@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\ServeiDadesEquips;
 use App\Entity\Equip;
+use App\Entity\Membredos;
 use App\Form\EquipEditarType;
 use App\Form\EquipNouType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -184,12 +185,21 @@ public function inserir(ManagerRegistry $doctrine) {
     #[Route('/equip/{id}', name:'dades_equip')]
     public function equip($id, ManagerRegistry $doctrine)
     {
-        $repositori = $doctrine->getRepository(Equip::class);
-        $equip = $repositori->find($id);
+        $repositoriEquip = $doctrine->getRepository(Equip::class);
+        $repositoriMembre = $doctrine->getRepository(Membredos::class);
+        $membres = $repositoriMembre->findAll();
+        $equip = $repositoriEquip->find($id);
+
         if($equip){
-            return $this->render('dades_equip.html.twig', array('equip' =>$equip));
+            return $this->render('dades_equip.html.twig', array(
+                'equip' => $equip,
+                'membres' => $membres
+            ));
         } else {
-            return $this->render('dades_equip.html.twig', array('equip' =>NULL));
+            return $this->render('dades_equip.html.twig', array(
+                'equip' => NULL,
+                'membres' => NULL
+            ));
         }
     }
 
