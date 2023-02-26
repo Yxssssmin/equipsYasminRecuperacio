@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\ServeiDadesEquips;
 use App\Entity\Equip;
+use App\Form\EquipEditarType;
+use App\Form\EquipNouType;
 use Doctrine\Persistence\ManagerRegistry;
 
 class EquipsController extends AbstractController {
@@ -38,14 +40,9 @@ public function editar(Request $request, $codi, ManagerRegistry $doctrine) {
     $repositori = $doctrine->getRepository(Equip::class);
     $equip = $repositori->find($codi);
     $imatgeOld = $equip->getImatge();
-    $formulari = $this->createFormBuilder($equip)
-        ->add('nom', TextType::class)
-        ->add('cicle', TextType::class)
-        ->add('curs', TextType::class)
-        ->add('imatge', FileType::class,array('required' => false, 'mapped' => false))
-        ->add('nota', NumberType::class)
-        ->add('save', SubmitType::class, array('label' => 'Enviar'))
-        ->getForm();
+    
+    $formulari = $this->createForm(EquipEditarType::class, $equip);
+
     $formulari->handleRequest($request);
 
     if ($formulari->isSubmitted() && $formulari->isValid()) {
@@ -60,7 +57,7 @@ public function editar(Request $request, $codi, ManagerRegistry $doctrine) {
             $nomFitxer = $imatge->getClientOriginalName();
             $directori = $this->getParameter('kernel.project_dir') . "/public/img/equips/";
             unlink("img/equips/".$imatgeOld);
-            
+
             try {
                 $imatge->move($directori,$nomFitxer);
             } catch (FileException $e) {
@@ -83,15 +80,9 @@ public function editar(Request $request, $codi, ManagerRegistry $doctrine) {
 #[Route('/equip/nou', name:'nou_equip')]
 public function nou(Request $request, ManagerRegistry $doctrine) {
 
-    $equip = new Equip();
-        $formulari = $this->createFormBuilder($equip)
-            ->add('nom', TextType::class)
-            ->add('cicle', TextType::class)
-            ->add('curs', TextType::class)
-            ->add('imatge', FileType::class,array('required' => false))
-            ->add('nota', NumberType::class)
-            ->add('save', SubmitType::class, array('label' => 'Enviar'))
-            ->getForm();
+        $equip = new Equip();
+        
+        $formulari = $this->createForm(EquipNouType::class, $equip);
 
         $formulari->handleRequest($request);
 

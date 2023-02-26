@@ -1,5 +1,7 @@
 <?php
 namespace App\Controller;
+use App\Form\MembreEditarType;
+use App\Form\MembreNouType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,23 +20,15 @@ use Doctrine\Persistence\ManagerRegistry;
 class MembresController extends AbstractController {
 
     #[Route('/membre/editar/{codi}' ,name:'editarMembre', requirements: ['codi' => '\d+'])]
-    public function editar(Request $request, $codi, ManagerRegistry $doctrine)
-    {
+    public function editar(Request $request, $codi, ManagerRegistry $doctrine) {
+
         $membre = new Membredos();
         $repositori = $doctrine->getRepository(Membredos::class);
         $membre = $repositori->find($codi);
         $imatgeOld = $membre->getImatgePerfil();
 
-        $formulari = $this->createFormBuilder($membre)
-            ->add('nom', TextType::class)
-            ->add('cognoms', TextType::class)
-            ->add('email', TextType::class, array('label' => 'Correu Electrònic'))
-            ->add('dataNaixement', DateType::class, array('label' => 'Data de Naixement', 'years' => range(1920,2022)))
-            ->add('imatgePerfil', FileType::class,array('required' => false, 'mapped' => false))
-            ->add('equip', EntityType::class, array('class' => Equip::class, 'choice_label' => 'nom'))
-            ->add('nota', NumberType::class)
-            ->add('save', SubmitType::class, array('label' => 'Enviar'))
-            ->getForm();
+        $formulari = $this->createForm(MembreEditarType::class, $membre);
+
         $formulari->handleRequest($request);
 
         if ($formulari->isSubmitted() && $formulari->isValid())
@@ -69,16 +63,9 @@ class MembresController extends AbstractController {
     public function nou(Request $request, ManagerRegistry $doctrine)
     {
         $membre = new Membredos();
-        $formulari = $this->createFormBuilder($membre)
-            ->add('nom', TextType::class)
-            ->add('cognoms', TextType::class)
-            ->add('email', TextType::class, array('label' => 'Correu Electrònic'))
-            ->add('dataNaixement', DateType::class, array('label' => 'Data de Naixement', 'years' => range(1920,2022)))
-            ->add('imatgePerfil', FileType::class,array('required' => false))
-            ->add('equip', EntityType::class, array('class' => Equip::class, 'choice_label' => 'nom'))
-            ->add('nota', NumberType::class)
-            ->add('save', SubmitType::class, array('label' => 'Enviar'))
-            ->getForm();
+        
+        $formulari = $this->createForm(MembreNouType::class, $membre);
+        
         $formulari->handleRequest($request);
 
         if ($formulari->isSubmitted() && $formulari->isValid())
