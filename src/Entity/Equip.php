@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EquipRepository::class)]
 class Equip
@@ -17,18 +18,30 @@ class Equip
     private ?int $id = null;
 
     #[ORM\Column(length:50, unique:true)]
+    #[Assert\NotBlank]
     private ?string $nom = null;
 
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank]
     private ?string $cicle = null;
 
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank]
     private ?string $curs = null;
 
     #[ORM\Column(length: 255)]
     private ?string $imatge = null;
 
     #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Range(
+        min: 0,
+        minMessage: 'La nota {{ value }} ha de ser major que 0',
+    )]
+    #[Assert\Range(
+        max: 10,
+        maxMessage: 'La nota {{ value }} ha de ser menor que 10',
+    )]
     private ?string $nota = null;
 
 

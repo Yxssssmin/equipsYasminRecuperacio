@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MembredosRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MembredosRepository::class)]
 class Membredos
@@ -15,12 +16,16 @@ class Membredos
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
     private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
     private ?string $cognoms = null;
 
     #[ORM\Column(length: 150, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Email(message: "L'email {{ value }} no és vàlid")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -30,10 +35,20 @@ class Membredos
     private ?\DateTimeInterface $data_naixement = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 2, scale: '0', nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Range(
+        min: 0,
+        minMessage: 'La nota {{ value }} ha de ser major que 0',
+    )]
+    #[Assert\Range(
+        max: 10,
+        maxMessage: 'La nota {{ value }} ha de ser menor que 10',
+    )]
     private ?string $nota = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Equip $equip = null;
 
     public function getId(): ?int
