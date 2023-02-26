@@ -65,6 +65,8 @@
           <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="blog.html">Blog</a></li>
+
+          {% if is_granted('ROLE_ADMIN') %}
           <li class="dropdown"><a href="#"><span>Dades</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -82,7 +84,10 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li>
+          {% endif %}
           <li><a href="#contact">Contact</a></li>
+          
+          
         </ul>
       </nav><!-- .navbar -->
 
@@ -91,6 +96,20 @@
 
     </div>
   </header>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <div style="  display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            width: 80%;
+                            border: solid black 1px;
+                            margin: 10px auto;
+                            text-align: center;
+                            padding: 10px;
+                            background-color: #f2e7c3;">
+          Benvingut/da, {{ app.user.username }}
+        <a href ="{{ path('logout') }}">Tancar sessió</a>
+      </div>
+          {% endif %}
   <br>
     <div style="text-align:center">
         {% block body %}{% endblock %}
