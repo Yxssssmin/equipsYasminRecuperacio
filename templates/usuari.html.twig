@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Usuaris{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    <link href="{{ asset('assets/css/estilsUsuari.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <h1 id="titolUsuari">Usuaris Projecte Equips 2n DAW</h1>
+    <h2 id="subtitolUsuari">Llistat d'usuaris</h2>
+    <br>
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Roles</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for usuari in usuaris %}
+                <tr>
+                    <td>{{ usuari.id }}</td>
+                    <td>{{ usuari.username }}</td>
+                    <td>{{ usuari.password }}</td>
+                    <td>{{ usuari.roles[0] }}</td>
+                    <td><a href="{{  path('editarUsuari', {'codi': usuari.id}) }}"><img style="width: 30px; heigth: 30px;" src="{{ asset('assets/img/editar.png') }}" /></a></td>
+                    <td><a href="{{  path('eliminarUsuari', {'codi': usuari.id}) }}"><img style="width: 30px; heigth: 30px;" src="{{ asset('assets/img/borrar.png') }}" /></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
