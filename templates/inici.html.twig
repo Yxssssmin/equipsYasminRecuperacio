@@ -22,6 +22,7 @@
         {% for equip in equips %}
             <p id="paragrafIniciDos">
                 <a id="paragrafInici" style="color:#0a53be" href="equip/{{ equip.id }}">{{ equip.nom }} (nota: {{ equip.nota }})</a>
+                <a href="{{  path('editarEquip', {'codi': equip.id}) }}"><img style="width: 30px; heigth: 30px;" src="{{ asset('assets/img/editar.png') }}" /></a>
             </p>
         {% endfor %}
     </div>
