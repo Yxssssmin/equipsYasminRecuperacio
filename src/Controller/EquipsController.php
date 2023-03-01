@@ -34,6 +34,15 @@ class EquipsController extends AbstractController {
 //
 //    }
 
+#[Route('/equips', name:'equips')]
+public function equips(ManagerRegistry $doctrine) {
+
+    $repositori = $doctrine->getRepository(Equip::class);
+    $equips = $repositori->findAll();
+    return $this->render('dades_equips2.html.twig', array('equips' => $equips));
+
+}
+
 #[Route('/equip/editar/{codi}' ,name:'editarEquip', requirements: ['codi' => '\d+'])]
 public function editar(Request $request, $codi, ManagerRegistry $doctrine) {
 
