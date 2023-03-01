@@ -10,10 +10,6 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils) {
 
-        Date::setLocale('ca_ES');
-        $hui = Date::now();
-        $data = $hui->format('d') . ', ' . $hui->format('')  ;
-
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         
